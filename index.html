@@ -1,72 +1,84 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kalkulator IPK Modern & Multimedia</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator IPK Simpel</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="container">
-    <!-- Header dengan Foto Banner -->
-    <header>
-      <div class="profile-banner">
-        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" alt="Ilustrasi Kuliah" class="header-img">
-      </div>
-      <h1><i class="fa-solid fa-graduation-cap"></i> Kalkulator IPK</h1>
-      <p>Hitung Indeks Prestasi Semester & Kumulatif secara praktis dan presisi</p>
-    </header>
+  <!-- Navbar Navigation -->
+  <nav class="navbar">
+    <div class="logo">Kalkulator IPK</div>
+    <div class="user-menu">
+      <span id="user-greeting">Guest</span>
+      <button id="auth-btn" onclick="handleAuthAction()">Login</button>
+    </div>
+  </nav>
 
-    <!-- Panel Kontrol Audio (Musik Fokus) -->
-    <div class="multimedia-card">
-      <div class="media-box" style="width: 100%;">
-        <label><i class="fa-solid fa-music"></i> Musik Fokus Belajar (Lo-Fi)</label>
-        <audio controls class="custom-audio">
-          <source src="Hearts2Hearts.mp3" type="audio/mpeg">
-          Browser Anda tidak mendukung elemen audio.
-        </audio>
+  <!-- Container Utama -->
+  <main class="container">
+    
+    <!-- Modal / Form Login Sederhana -->
+    <div id="login-modal" class="modal hidden">
+      <div class="modal-content">
+        <h3>Masuk ke Akun</h3>
+        <p>Masukkan nama kamu untuk menyimpan sesi IPK.</p>
+        <input type="text" id="username-input" placeholder="Masukkan Nama / Username...">
+        <div class="modal-actions">
+          <button onclick="submitLogin()" class="btn-primary">Masuk</button>
+          <button onclick="closeLoginModal()" class="btn-secondary">Batal</button>
+        </div>
       </div>
     </div>
 
-    <!-- Ringkasan IPK -->
-    <div class="summary-card">
-      <div class="stat-box">
-        <span class="label">IPK Kumulatif</span>
-        <span class="value" id="total-ipk">0.00</span>
-        <div id="predikat-badge" class="badge badge-good">Belum Ada Data</div>
+    <!-- Ringkasan Hasil IPK -->
+    <section class="card summary-card">
+      <h2>Ringkasan Hasil</h2>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <span class="stat-label">Total SKS</span>
+          <span id="total-sks" class="stat-value">0</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-label">IPK Kamu</span>
+          <span id="ipk-val" class="stat-value highlight">0.00</span>
+        </div>
       </div>
-      <div class="stat-box">
-        <span class="label">Total SKS Lulus</span>
-        <span class="value" id="total-sks">0</span>
-      </div>
-      <div class="stat-box">
-        <span class="label">Total Matakuliah</span>
-        <span class="value" id="total-matkul">0</span>
-      </div>
-    </div>
+    </section>
 
-    <!-- Actions -->
-    <div class="actions-bar">
-      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-        <button class="btn btn-primary" onclick="addSemester()">
-          <i class="fa-solid fa-plus"></i> Tambah Semester
-        </button>
-        <button class="btn btn-secondary" onclick="exportSummary()">
-          <i class="fa-solid fa-copy"></i> Salin Ringkasan
-        </button>
+    <!-- Form & Tabel Matakuliah -->
+    <section class="card">
+      <div class="card-header">
+        <h2>Daftar Mata Kuliah</h2>
+        <button onclick="tambahBaris()" class="btn-primary">+ Tambah Matkul</button>
       </div>
-      <button class="btn btn-secondary" onclick="resetAll()">
-        <i class="fa-solid fa-rotate-right"></i> Reset Semua
-      </button>
-    </div>
 
-    <!-- Container Tempat Semester Berada -->
-    <div id="semester-container"></div>
-  </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Mata Kuliah</th>
+              <th>SKS</th>
+              <th>Nilai Huruf</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="matkul-list">
+            <!-- Baris mata kuliah akan ditambah secara dinamis via JS -->
+          </tbody>
+        </table>
+      </div>
 
-  <script src="main.js"></script>
+      <div class="card-footer">
+        <button onclick="hitungIPK()" class="btn-success">Hitung IPK</button>
+        <button onclick="resetData()" class="btn-danger">Reset Semua</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
