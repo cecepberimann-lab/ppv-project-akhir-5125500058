@@ -1,0 +1,10 @@
+{
+  "project": "Kalkulator IPK Proyek Akhir",
+  "assets": [
+    {
+      "name": "Hearts2Hearts.mp3",
+      "type": "audio/mpeg",
+      "source": "local"
+    }
+  ]
+}

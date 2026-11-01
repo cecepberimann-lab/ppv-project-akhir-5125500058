@@ -3,81 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kalkulator IPK Simpel</title>
+  <title>Kalkulator IPK</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- Navbar Navigation -->
-  <nav class="navbar">
-    <div class="logo">Kalkulator IPK</div>
-    <div class="user-menu">
-      <span id="user-greeting">Guest</span>
-      <button id="auth-btn" onclick="handleAuthAction()">Login</button>
+<audio autoplay loop>
+  <source src="Hearts2Hearts.mp3" type="audio/mpeg">
+</audio>
+  <!-- STEP 1: LAYAR LOGIN (Muncul Pertama Kali) -->
+  <div id="login-screen" class="auth-container">
+    <div class="auth-card">
+      <h2>Selamat Datang! 👋</h2>
+      <p>Masukkan nama kamu untuk mulai menggunakan Kalkulator IPK.</p>
+      <form onsubmit="prosesLogin(event)">
+        <div class="form-group">
+          <label for="username">Nama / Username</label>
+          <input type="text" id="username" placeholder="Contoh: Cecep" required>
+        </div>
+        <button type="submit" class="btn-primary btn-block">Masuk ke Kalkulator</button>
+      </form>
     </div>
-  </nav>
+  </div>
 
-  <!-- Container Utama -->
-  <main class="container">
+  <!-- STEP 2: LAYAR KALKULATOR IPK (Sembunyi Sebelum Login) -->
+  <div id="app-screen" class="hidden">
     
-    <!-- Modal / Form Login Sederhana -->
-    <div id="login-modal" class="modal hidden">
-      <div class="modal-content">
-        <h3>Masuk ke Akun</h3>
-        <p>Masukkan nama kamu untuk menyimpan sesi IPK.</p>
-        <input type="text" id="username-input" placeholder="Masukkan Nama / Username...">
-        <div class="modal-actions">
-          <button onclick="submitLogin()" class="btn-primary">Masuk</button>
-          <button onclick="closeLoginModal()" class="btn-secondary">Batal</button>
+    <!-- Navbar Navigation -->
+    <nav class="navbar">
+      <div class="logo">Kalkulator IPK</div>
+      <div class="user-menu">
+        <span id="user-greeting">Halo!</span>
+        <button onclick="prosesLogout()" class="btn-danger">Logout</button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+      
+      <!-- Ringkasan Hasil -->
+      <section class="card summary-card">
+        <h2>Ringkasan Hasil</h2>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-label">Total SKS</span>
+            <span id="total-sks" class="stat-value">0</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">IPK Kamu</span>
+            <span id="ipk-val" class="stat-value highlight">0.00</span>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- Ringkasan Hasil IPK -->
-    <section class="card summary-card">
-      <h2>Ringkasan Hasil</h2>
-      <div class="stats-grid">
-        <div class="stat-box">
-          <span class="stat-label">Total SKS</span>
-          <span id="total-sks" class="stat-value">0</span>
+      <!-- Form & Tabel Matakuliah -->
+      <section class="card">
+        <div class="card-header">
+          <h2>Daftar Mata Kuliah</h2>
+          <button type="button" onclick="tambahBaris()" class="btn-primary">+ Tambah Matkul</button>
         </div>
-        <div class="stat-box">
-          <span class="stat-label">IPK Kamu</span>
-          <span id="ipk-val" class="stat-value highlight">0.00</span>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Mata Kuliah</th>
+                <th>SKS</th>
+                <th>Nilai Huruf</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="matkul-list">
+              <!-- Baris dimasukkan dinamis via JavaScript -->
+            </tbody>
+          </table>
         </div>
-      </div>
-    </section>
 
-    <!-- Form & Tabel Matakuliah -->
-    <section class="card">
-      <div class="card-header">
-        <h2>Daftar Mata Kuliah</h2>
-        <button onclick="tambahBaris()" class="btn-primary">+ Tambah Matkul</button>
-      </div>
+        <div class="card-footer">
+          <button type="button" onclick="hitungIPK()" class="btn-success">Hitung IPK</button>
+          <button type="button" onclick="resetData()" class="btn-secondary">Reset Semua</button>
+        </div>
+      </section>
 
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>Mata Kuliah</th>
-              <th>SKS</th>
-              <th>Nilai Huruf</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="matkul-list">
-            <!-- Baris mata kuliah akan ditambah secara dinamis via JS -->
-          </tbody>
-        </table>
-      </div>
-
-      <div class="card-footer">
-        <button onclick="hitungIPK()" class="btn-success">Hitung IPK</button>
-        <button onclick="resetData()" class="btn-danger">Reset Semua</button>
-      </div>
-    </section>
-
-  </main>
+    </main>
+  </div>
 
   <script src="script.js"></script>
 </body>
